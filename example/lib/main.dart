@@ -64,25 +64,12 @@ class _MyAppState extends State<MyApp> {
 
     try {
       socket = SocketIOManager().createSocketIO(
-        'https://api-qa.novakidschool.com',
-        '/socket.io/',
-        query: 'classid=150511&teachercountry=Oman',
+        'Domain',
+        'path',
+        query: 'query',
           socketStatusCallback: (String event) {
             debugPrint(event);
             setState(() => statusSocket = event);
-            if(event == 'connect') {
-              var socket = SocketIOManager().createSocketIO(
-                  'https://qa.novakidschool.com',
-                  '/socket.io/',
-                  query: 'classid=150511&teachercountry=Oman',
-                  socketStatusCallback: (String event) {
-                    debugPrint(event);
-                    setState(() => statusSocket = event+' 2');
-                  }
-              );
-              socket.init();
-              socket.connect();
-            }
           }
       );
 
