@@ -1,0 +1,33 @@
+PODS:
+  - Flutter (1.0.0)
+  - Socket.IO-Client-Swift (13.3.0):
+    - Starscream (~> 3.0.2)
+  - socket_io (0.0.1):
+    - Flutter
+    - Socket.IO-Client-Swift (= 13.3.0)
+  - Starscream (3.0.6)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - socket_io (from `.symlinks/plugins/socket_io/ios`)
+
+SPEC REPOS:
+  trunk:
+    - Socket.IO-Client-Swift
+    - Starscream
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  socket_io:
+    :path: ".symlinks/plugins/socket_io/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  Socket.IO-Client-Swift: 0afb192a562db90d50e3f7f7421c06925a3f0179
+  socket_io: e7c8272bca017161c8e52e66bd6a12592480d502
+  Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
+
+PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+
+COCOAPODS: 1.10.0
