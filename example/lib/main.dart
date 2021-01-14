@@ -68,23 +68,6 @@ class _MyAppState extends State<MyApp> {
           socketStatusCallback: (String event) {
             debugPrint(event);
             setState(() => statusSocket = event);
-            if(event == 'connect') {
-              var _socket = SocketIOManager().createSocketIO(
-                  'DOMAIN',
-                  'NAMESPACE',
-                  query: 'QUERY',
-                  socketStatusCallback: (String event) {
-                    debugPrint(event);
-                    setState(() => statusSocket = event);
-                    if(event == 'connect') {
-
-                    }
-                  }
-              );
-
-              _socket.init();
-              _socket.connect();
-            }
           }
       );
 

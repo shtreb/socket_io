@@ -143,7 +143,7 @@ class SocketIO {
   }
 
   /// Send a message via a channel (i.e. event)
-  Future<void> sendMessage(String event, dynamic message, [Function callback]) async {
+  Future<void> sendMessage(String event, String message, [Function callback]) async {
     if (event != null && event.isNotEmpty) {
       CallbackFunctions functions = _callbacks[event];
       SocketIOFunction f;

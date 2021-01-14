@@ -84,7 +84,6 @@
         if (!manager) {
             manager = [[SocketManager alloc] initWithSocketURL:url config:@{@"log": @NO, @"compress": @NO, @"connectParams": self.query, @"forceWebsockets": @NO, @"forcePolling":@YES, @"forceNew": @NO, @"reconnects": @YES}];
         }
-        self.socket = [SocketIOClient init];
         self.socket = manager.defaultSocket;
         //self.socket = [manager socketForNamespace:self.nameSpace];
         weakify(self);
@@ -164,6 +163,7 @@
     if ([self isConnected] && eventName && message) {
         NSLog(@"SEND MESSAGE EVENT %@ MESSAGE %@", eventName, message);
         SocketListener *listener = [SocketListener initSocketListener:self.methodChannel event:eventName socketId:[self getId] callBack:callBack];
+        NSString *mess = [NSString stringWithFormat:@"%@", message];
         NSArray *jsonObject = [NSJSONSerialization JSONObjectWithData:[message dataUsingEncoding:NSUTF8StringEncoding]
                                                               options:0 error:NULL];
         [[self.socket emitWithAck:eventName with:@[jsonObject]] timingOutAfter:0 callback:^(NSArray* data) {
