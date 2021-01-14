@@ -48,7 +48,7 @@
     obj.nameSpace = nameSpace;
     obj.statusCallback = callBack;
     obj.subscribes = [[NSMutableDictionary alloc] init];
-    obj.sockets = [[NSDictionary alloc] init];
+    obj.managers = [[NSMutableDictionary alloc] init];
     return obj;
 }
 
@@ -82,14 +82,19 @@
         NSString *_url = [self.domain stringByAppendingString:self.nameSpace];
         NSURL *url = [NSURL URLWithString: _url];
         
-        if ([self.sockets objectForKey:_url] != nil) {
+        if ([self.managers objectForKey:_url] != nil) {
+            SocketManager *manager = [self.managers objectForKey:_url];
+            if(manager != nil) {
+                self.socket = manager.defaultSocket;
+            }
             return;
         }
         
         SocketManager *manager = [[SocketManager alloc] initWithSocketURL:url config:@{@"log": @NO, @"compress": @NO, @"connectParams": self.query, @"forceWebsockets": @NO, @"forcePolling":@YES, @"forceNew": @NO, @"reconnects": @YES}];
         
-        SocketIOClient *socket = [[SocketIOClient init] initWithManager:manager nsp:_nameSpace];
-        [self.sockets setValue:socket forKey:_url];
+        //SocketIOClient *socket = [[SocketIOClient alloc] initWithManager:manager nsp:_nameSpace];
+        [self.managers setValue:manager forKey:_url];
+        self.socket = manager.defaultSocket;
         
         weakify(self);
         [self.socket on:EVENT_CONNECT callback:^(NSArray* data, SocketAckEmitter* ack) {

@@ -21,7 +21,7 @@
 @property (nonatomic, strong) NSString *statusCallback;
 @property (nonatomic, strong) NSMutableDictionary *subscribes;
 @property (nonatomic, strong) SocketIOClient *socket;
-@property (nonatomic, strong) NSDictionary *sockets;
+@property (nonatomic, strong) NSMutableDictionary *managers;
 
 + (instancetype)initSocketIO:(FlutterMethodChannel *)methodChannel
                        query:(NSDictionary *)query

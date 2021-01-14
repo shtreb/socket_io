@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'package:socket_io/flutter_socket_io.dart';
@@ -62,12 +64,25 @@ class _MyAppState extends State<MyApp> {
 
     try {
       socket = SocketIOManager().createSocketIO(
-        'Domain',
-        'Namespace',
-        query: 'Query',
+        'https://api-qa.novakidschool.com',
+        '/socket.io/',
+        query: 'classid=150511&teachercountry=Oman',
           socketStatusCallback: (String event) {
             debugPrint(event);
             setState(() => statusSocket = event);
+            if(event == 'connect') {
+              var socket = SocketIOManager().createSocketIO(
+                  'https://qa.novakidschool.com',
+                  '/socket.io/',
+                  query: 'classid=150511&teachercountry=Oman',
+                  socketStatusCallback: (String event) {
+                    debugPrint(event);
+                    setState(() => statusSocket = event+' 2');
+                  }
+              );
+              socket.init();
+              socket.connect();
+            }
           }
       );
 
