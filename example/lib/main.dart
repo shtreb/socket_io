@@ -25,79 +25,84 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  SocketIO socket;
+  List<SocketIO> sockets;
   String statusSocket = 'none';
 
-  @override
-  Widget build(BuildContext context) {
+  @override void initState() {
+    sockets = [];
+    super.initState();
+  }
+
+  @override Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Plugin example app'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text('status: $statusSocket', textAlign: TextAlign.center,),
-            MaterialButton(
-              child: Text(statusSocket == 'connect' ?
-                'Disconnect' :
-                'Start Connect'
+      body: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Expanded(child: Text(statusSocket, textAlign: TextAlign.center,)),
+          Row(
+            children: [
+              MaterialButton(
+                  child: Text('Start Connect'),
+                  color: Theme.of(context).primaryColor,
+                  onPressed: () => _createSocket()
               ),
-              color: Theme.of(context).primaryColor,
-              onPressed: () {
-                if (statusSocket == 'none' || socket == null) {
-                  _createSocket();
-                } else {
-                  _closeSocket();
-                }
-              },
-            )
-          ],
-        ),
+              MaterialButton(
+                child: Text('Disconnect'),
+                color: Theme.of(context).primaryColor,
+                onPressed: () => _closeSocket(0),
+              )
+            ],
+          )
+        ],
       ),
     );
   }
 
   _createSocket() async {
-    _closeSocket();
+    //_closeSocket();
 
     try {
-      socket = SocketIOManager().createSocketIO(
-        'Domain',
-        'path',
-        query: 'query',
+      var socket = SocketIOManager().createSocketIO(
+        sockets.isEmpty ? 'https://api-qa.novakidschool.com' :
+        'https://qa.novakidschool.com',
+        '/socket.io/',
+        query: 'classid=137129&teachercountry=Oman',
           socketStatusCallback: (String event) {
             debugPrint(event);
-            setState(() => statusSocket = event);
+            setState(() => statusSocket += '\n$event ${sockets.last.getId()}');
           }
       );
 
       socket.init();
       socket.connect();
+      sockets.add(socket);
     } catch(e) {
       debugPrint(e);
-      setState(() => statusSocket = 'local fail');
+      setState(() => statusSocket += '\nlocal fail');
     }
   }
 
-  _closeSocket() {
-    if(socket == null) return;
+  _closeSocket(int id) {
+    if(sockets.length == 0) return;
+    if(sockets.length < id) return;
 
-    socket.disconnect();
-    socket.destroy();
+    String _id = sockets[id].getId();
+    sockets[id].disconnect();
+    sockets[id].destroy();
+    sockets.removeAt(id);
     if(mounted)
       setState(() {
-        socket = null;
-        statusSocket = 'none';
+        statusSocket += '\nnone $_id';
       });
-    else
-      socket = null;
   }
 
   @override
   void dispose() {
-    _closeSocket();
+    for(int i = 0; i < sockets.length; i++)
+      _closeSocket(i);
     super.dispose();
   }
 }

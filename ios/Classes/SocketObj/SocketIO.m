@@ -263,7 +263,9 @@
 
 - (void)disconnect {
     if (self.socket) {
-        [self.socket disconnect];
+        SocketManager *manager = [self.managers objectForKey:[self getId]];
+        [manager disconnect];
+        [self.managers removeObjectForKey:self.getId];
     }
 }
 
