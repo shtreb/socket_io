@@ -15,7 +15,7 @@ SocketIO with native
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'Socket.IO-Client-Swift', '13.3.0'
+  s.dependency 'Socket.IO-Client-Swift', '15.2.0'
   s.platform = :ios, '9.0'
 
   # Flutter.framework does not contain a i386 slice.

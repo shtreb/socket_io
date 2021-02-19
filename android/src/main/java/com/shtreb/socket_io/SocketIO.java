@@ -19,11 +19,9 @@ import java.util.concurrent.ConcurrentMap;
 import io.flutter.plugin.common.MethodChannel;
 import io.socket.client.Ack;
 import io.socket.client.IO;
-import io.socket.client.Manager;
 import io.socket.client.Socket;
 import io.socket.client.Url;
 import io.socket.emitter.Emitter;
-import io.socket.engineio.client.transports.WebSocket;
 import io.socket.engineio.client.transports.Polling;
 
 public class SocketIO {
@@ -184,35 +182,35 @@ public class SocketIO {
             public void call(Object... args) {
                 onSocketCallback(Socket.EVENT_CONNECT, args);
             }
-        }).on(Socket.EVENT_RECONNECT, new Emitter.Listener() {
+        }).on("reconnect", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                onSocketCallback(Socket.EVENT_RECONNECT, args);
+                onSocketCallback("reconnect", args);
             }
-        }).on(Socket.EVENT_RECONNECTING, new Emitter.Listener() {
+        }).on("reconnecting", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                onSocketCallback(Socket.EVENT_RECONNECTING, args);
+                onSocketCallback("reconnecting", args);
             }
-        }).on(Socket.EVENT_RECONNECT_ATTEMPT, new Emitter.Listener() {
+        }).on("reconnect_attempt", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                onSocketCallback(Socket.EVENT_RECONNECT_ATTEMPT, args);
+                onSocketCallback("reconnect_attempt", args);
             }
-        }).on(Socket.EVENT_RECONNECT_FAILED, new Emitter.Listener() {
+        }).on("reconnect_failed", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                onSocketCallback(Socket.EVENT_RECONNECT_FAILED, args);
+                onSocketCallback("reconnect_failed", args);
             }
-        }).on(Socket.EVENT_RECONNECT_ERROR, new Emitter.Listener() {
+        }).on("reconnect_error", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                onSocketCallback(Socket.EVENT_RECONNECT_ERROR, args);
+                onSocketCallback("reconnect_error", args);
             }
-        }).on(Socket.EVENT_CONNECT_TIMEOUT, new Emitter.Listener() {
+        }).on("connect_timeout", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                onSocketCallback(Socket.EVENT_CONNECT_TIMEOUT, args);
+                onSocketCallback("connect_timeout", args);
             }
         }).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
             @Override

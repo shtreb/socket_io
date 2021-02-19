@@ -90,7 +90,7 @@
             return;
         }
         
-        SocketManager *manager = [[SocketManager alloc] initWithSocketURL:url config:@{@"log": @NO, @"compress": @NO, @"connectParams": self.query, @"forceWebsockets": @NO, @"forcePolling":@YES, @"forceNew": @NO, @"reconnects": @YES}];
+        SocketManager *manager = [[SocketManager alloc] initWithSocketURL:url config:@{@"log": @YES, @"compress": @NO, @"connectParams": self.query, @"forceWebsockets": @NO, @"forcePolling":@YES, @"forceNew": @YES, @"reconnects": @NO}];
         
         //SocketIOClient *socket = [[SocketIOClient alloc] initWithManager:manager nsp:_nameSpace];
         [self.managers setValue:manager forKey:_url];

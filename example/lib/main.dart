@@ -66,8 +66,8 @@ class _MyAppState extends State<MyApp> {
 
     try {
       var socket = SocketIOManager().createSocketIO(
-        sockets.isEmpty ? 'https://api-qa.novakidschool.com' :
-        'https://qa.novakidschool.com',
+        //sockets.isEmpty ? 'https://api-qa.novakidschool.com' :
+        'https://kshtreblev.novakidschool.com',
         '/socket.io/',
         query: 'classid=137129&teachercountry=Oman',
           socketStatusCallback: (String event) {
